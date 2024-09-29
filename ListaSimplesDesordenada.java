@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class ListaSimplesDesordenada<X> implements Iterable<X> {
     // Classe interna representando um nó da lista
-    private class No {
+     private class No {
         private X info; // Informação armazenada no nó
         private No prox; // Referência para o próximo nó na lista
 
@@ -30,16 +30,11 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
             return this.prox;
         }
 
-        // Método para definir a informação armazenada no nó
-        public void setInfo(X i) {
-            this.info = i;
-        }
-
         // Método para definir a referência para o próximo nó
         public void setProx(No p) {
             this.prox = p;
         }
-    } // fim da classe No
+    }// fim da classe No
 
     // Referências para o primeiro e o último nó da lista
     private No primeiro, ultimo;
@@ -56,8 +51,8 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
         return this.primeiro.getInfo(); // Retorna a informação do primeiro nó
     }
 
-    
     // Método privado para clonar um objeto do tipo X, se ele for clonável
+    @SuppressWarnings("unchecked")
     private X meuCloneDeX(X x) {
         X ret = null;
 
@@ -68,7 +63,8 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
             // Invocando o método clone para criar uma cópia do objeto
             ret = (X) metodo.invoke(x);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException erro) {
-            // Se o método clone não existir ou houver algum erro na clonagem, lança uma exceção em tempo de execução
+            // Se o método clone não existir ou houver algum erro na clonagem, lança uma
+            // exceção em tempo de execução
             throw new RuntimeException("Erro ao clonar o objeto", erro);
         }
 
@@ -144,13 +140,32 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
         return ret;
     }
 
+    public X getElemento(int index) throws Exception {
+        if (index < 0 || index >= getQuantidade()) {
+            throw new Exception("Índice fora dos limites da lista");
+        }
+
+        No atual = primeiro;
+        for (int i = 0; i < index; i++) {
+            if (atual != null) {
+                atual = atual.getProx();
+            }
+        }
+
+        if (atual == null) {
+            throw new Exception("Elemento não encontrado");
+        }
+
+        return atual.getInfo();
+    }
+
     public X buscarItem(X item) throws Exception {
         if (item == null) {
             throw new Exception("Informação não pode ser nula");
         }
-    
+
         No atual = this.primeiro;
-    
+
         // Percorre a lista para encontrar o item
         while (atual != null) {
             if (item.equals(atual.getInfo())) {
@@ -158,12 +173,11 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
             }
             atual = atual.getProx();
         }
-    
+
         // Retorna null se o item não for encontrado
         return null;
     }
-    
-   
+
     public void removaItemIndicado(X i) throws Exception {
         if (i == null)
             throw new Exception("Informacao ausente");
@@ -196,6 +210,7 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
         if (!removeu)
             throw new Exception("Informacao inexistente");
     }
+
     // Método para remover o item do final da lista
     public void removaItemDoFinal() throws Exception {
         if (this.primeiro == null)
@@ -284,6 +299,7 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
         if (this.getClass() != obj.getClass())
             return false;
 
+        @SuppressWarnings("unchecked")
         ListaSimplesDesordenada<X> lista = (ListaSimplesDesordenada<X>) obj;
 
         No atualThis = this.primeiro;
@@ -347,19 +363,21 @@ public class ListaSimplesDesordenada<X> implements Iterable<X> {
     }
 
     // Método para clonar a lista
+    @Override
     public Object clone() {
         ListaSimplesDesordenada<X> ret = null;
 
         try {
             ret = new ListaSimplesDesordenada<>(this);
         } catch (Exception erro) {
-            // O construtor de cópia só lança exceção se o modelo for null, o que não ocorre aqui
+            // O construtor de cópia só lança exceção se o modelo for null, o que não ocorre
+            // aqui
         }
 
         return ret;
     }
 
-    //iterator é um metodo para percorrer a lista 
+    // iterator é um metodo para percorrer a lista
     @Override
     public Iterator<X> iterator() {
         return new Iterator<X>() {
