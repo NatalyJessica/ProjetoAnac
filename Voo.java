@@ -9,7 +9,6 @@ class Voo {
         this.destino = destino;
     }
     
-
     public int getNumero() {
         return numero;
     }

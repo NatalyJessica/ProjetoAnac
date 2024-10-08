@@ -5,14 +5,16 @@ public class Main {
     private static Grafo grafo = new Grafo(); // Instância do Grafo
 
     public static void main(String[] args) {
-        
-          grafo.adicionarAeroporto("Belo Horizonte", "CNF");
-          grafo.adicionarAeroporto("Brasília", "BSB");
-          grafo.adicionarAeroporto("Rio de Janeiro", "GIG");
-          grafo.adicionarAeroporto("Salvador", "SSA");
-          grafo.adicionarAeroporto("São Paulo", "GRU");
-         
-
+        try {
+            grafo.adicionarAeroporto("Belo Horizonte", "CNF");
+            grafo.adicionarAeroporto("Brasília", "BSB");
+            grafo.adicionarAeroporto("Rio de Janeiro", "GIG");
+            grafo.adicionarAeroporto("Salvador", "SSA");
+            grafo.adicionarAeroporto("São Paulo", "GRU");
+        } catch (Exception e) {
+            System.out.println("Erro ao adicionar aeroporto: " + e.getMessage());
+        }
+          
         int opcao;
         do {
             System.out.println("Menu:");
@@ -61,7 +63,6 @@ public class Main {
             System.out.print("Digite o código do aeroporto: ");
             String codigo = scanner.nextLine();
 
-            // Chama o método de adicionar aeroporto da classe Grafo
             grafo.adicionarAeroporto(nomeCidade, codigo);
         } catch (Exception e) {
             System.out.println("Erro ao adicionar aeroporto: " + e.getMessage());
@@ -76,7 +77,7 @@ public class Main {
 
             if (origem == null) {
                 System.out.println("Erro: Aeroporto de origem não encontrado: " + codigoOrigem);
-                return; // Retorna se o aeroporto de origem não for encontrado
+                return; 
             }
 
             System.out.print("Digite o código do aeroporto de destino: ");
@@ -85,7 +86,7 @@ public class Main {
 
             if (destino == null) {
                 System.out.println("Erro: Aeroporto de destino não encontrado: " + codigoDestino);
-                return; // Retorna se o aeroporto de destino não for encontrado
+                return;
             }
 
             System.out.print("Digite o número do voo: ");

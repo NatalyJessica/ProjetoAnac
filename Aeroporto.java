@@ -2,7 +2,6 @@ class Aeroporto {
     private String nomeCidade;
     private String codigo;
    
-
     public Aeroporto(String nomeCidade, String codigo) {
         this.nomeCidade = nomeCidade;
         this.codigo = codigo;
